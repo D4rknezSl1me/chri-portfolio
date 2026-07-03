@@ -62,10 +62,9 @@ spec:
               mountPath: /tmp
             - name: next-cache
               mountPath: /app/.next/cache
-          # Uncomment when the contact form secrets exist in the cluster:
-          # envFrom:
-          #   - secretRef:
-          #       name: chri-portfolio-secrets
+          envFrom:
+            - secretRef:
+                name: chri-portfolio-secrets
       volumes:
         - name: tmp
           emptyDir: {}
