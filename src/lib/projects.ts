@@ -53,6 +53,16 @@ export const projects: Project[] = [
     year: '2026',
   },
   {
+    slug: 'voxel-vortex',
+    title: 'Voxel Vortex — Minecraft Hosting',
+    summary:
+      'A self-service Minecraft hosting platform: spin up game servers on demand and manage them entirely from the browser — live console, automated backups, plugins, worlds, and whitelist/access control. Each server runs isolated as its own container on Kubernetes.',
+    role: 'Full-stack',
+    stack: ['React', 'Fastify', 'Kubernetes API', 'RCON', 'WebSocket', 'JWT'],
+    outcome: 'One-click, fully-managed Minecraft servers — self-hosted, no third-party host.',
+    year: '2026',
+  },
+  {
     slug: 'this-site',
     title: 'This Portfolio',
     summary:
