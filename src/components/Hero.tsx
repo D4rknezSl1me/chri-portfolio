@@ -1,31 +1,15 @@
 'use client'
 
-import { useEffect } from 'react'
-import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { site } from '@/lib/site'
 import { HeroCanvas } from './HeroCanvas'
 
 export function Hero() {
   const reduce = useReducedMotion()
 
-  // Cursor parallax for the hero content (subtle, spring-smoothed).
-  const mx = useMotionValue(0)
-  const my = useMotionValue(0)
-  const x = useSpring(mx, { stiffness: 60, damping: 20 })
-  const y = useSpring(my, { stiffness: 60, damping: 20 })
-
-  useEffect(() => {
-    if (reduce) return
-    const onMove = (e: MouseEvent) => {
-      mx.set(((e.clientX / window.innerWidth) * 2 - 1) * 14)
-      my.set(((e.clientY / window.innerHeight) * 2 - 1) * 10)
-    }
-    window.addEventListener('mousemove', onMove)
-    return () => window.removeEventListener('mousemove', onMove)
-  }, [mx, my, reduce])
-
   return (
     <section className="relative min-h-[92vh] overflow-hidden">
+      {/* Only the background reacts to the cursor/scroll; the text stays put. */}
       <HeroCanvas />
       <div
         aria-hidden
@@ -36,7 +20,7 @@ export function Hero() {
         }}
       />
 
-      <motion.div style={{ x, y }} className="mx-auto max-w-content px-6 pb-24 pt-28 sm:pt-40">
+      <div className="mx-auto max-w-content px-6 pb-24 pt-28 sm:pt-40">
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -83,7 +67,7 @@ export function Hero() {
             Get in touch
           </a>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   )
 }

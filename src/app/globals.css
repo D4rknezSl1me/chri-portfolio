@@ -30,6 +30,19 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Hide the native scrollbar — replaced by the custom <ScrollProgress /> rail. */
+html,
+body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none; /* Chrome, Safari */
+}
+
 body {
   background-color: rgb(var(--bg));
   color: rgb(var(--fg));
