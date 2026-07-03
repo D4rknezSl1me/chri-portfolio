@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chri-portfolio
+  namespace: apps
+  labels:
+    app: chri-portfolio
+spec:
+  selector:
+    app: chri-portfolio
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000

@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Dark-first design tokens (RGB channels for Tailwind alpha support). */
+  --bg: 10 10 12;
+  --surface: 20 20 24;
+  --fg: 237 237 240;
+  --muted: 156 156 168;
+  --accent: 56 224 210; /* signature electric cyan — make it yours */
+  --border: 42 42 50;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+.light {
+  --bg: 250 250 252;
+  --surface: 255 255 255;
+  --fg: 18 18 22;
+  --muted: 90 90 100;
+  --accent: 12 148 136;
+  --border: 226 226 233;
+}
+
+* {
+  border-color: rgb(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: rgb(var(--bg));
+  color: rgb(var(--fg));
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+::selection {
+  background-color: rgb(var(--accent) / 0.25);
+}

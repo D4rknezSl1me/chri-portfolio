@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chri-portfolio
+  namespace: apps
+  labels:
+    app: chri-portfolio
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: christiancangelli.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: chri-portfolio
+                port:
+                  number: 80
+    - host: www.christiancangelli.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: chri-portfolio
+                port:
+                  number: 80
