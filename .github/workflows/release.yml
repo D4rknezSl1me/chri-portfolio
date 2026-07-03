@@ -53,9 +53,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Pin image tag & apply manifests
+      - name: Apply manifests & pin image tag
+        env:
+          TAG: ${{ needs.image.outputs.tag }}
         run: |
-          cd deploy/k8s
-          kustomize edit set image d4knezsl1me/chri-portfolio=d4knezsl1me/chri-portfolio:${{ needs.image.outputs.tag }}
-          kubectl apply -k .
+          # Uses kubectl's built-in kustomize (-k); no standalone kustomize needed.
+          kubectl apply -k deploy/k8s
+          kubectl -n apps set image deploy/chri-portfolio web=d4knezsl1me/chri-portfolio:"$TAG"
           kubectl -n apps rollout status deploy/chri-portfolio --timeout=120s
