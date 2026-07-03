@@ -25,6 +25,9 @@ spec:
         - name: registry-secret
       securityContext:
         runAsNonRoot: true
+        runAsUser: 65532 # distroless "nonroot" UID (numeric, so kubelet can verify)
+        runAsGroup: 65532
+        fsGroup: 65532
         seccompProfile:
           type: RuntimeDefault
       containers:
