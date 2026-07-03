@@ -15,7 +15,7 @@ export const projects: Project[] = [
     slug: 'kinai',
     title: 'KinAI',
     summary:
-      'An innovative AI platform for professional football, in production with clubs across Italy’s Serie A and Serie B. I work full-stack across its three products — a web portal, a core engine, and a desktop application. First and only of its kind in its category. (Capabilities are proprietary.)',
+      'An AI platform that helps professional football clubs make smarter, data-driven decisions — in production with teams across Italy’s Serie A and Serie B. I work full-stack across its three products: a web portal, a core engine, and a desktop application. First and only of its kind in its category.',
     role: 'Full-stack developer',
     stack: ['Web portal', 'Desktop app', 'AI engine', 'Pro football'],
     outcome: 'Adopted by Serie A & Serie B clubs — first and only in its category.',
