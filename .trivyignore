@@ -1,0 +1,20 @@
+# Trivy ignore list — scoped, documented, and time-bound.
+#
+# These are OpenSSL/libssl3 CVEs in the Debian 12 base layer of the
+# gcr.io/distroless/nodejs22-debian12 image. Debian has published fixes, but the
+# upstream distroless base had not yet been rebuilt with them at release time,
+# so `ignore-unfixed: true` does not skip them.
+#
+# Context / risk acceptance: the app serves plain HTTP inside the cluster; all
+# TLS is terminated at Cloudflare's edge and the cloudflared tunnel, so this
+# OpenSSL is not on the request path. Exposure is negligible for this workload.
+#
+# ACTION: remove these lines once the distroless base is rebuilt (re-run the
+# monthly image rebuild); the scan will then pass without exceptions.
+# Reviewed: 2026-07-03
+CVE-2026-28387
+CVE-2026-28388
+CVE-2026-28389
+CVE-2026-28390
+CVE-2026-31789
+CVE-2026-45447

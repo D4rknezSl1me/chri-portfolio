@@ -45,6 +45,7 @@ jobs:
           severity: HIGH,CRITICAL
           exit-code: "1"
           ignore-unfixed: true
+          trivyignores: .trivyignore
 
   # 2) Deploy to the cluster (self-hosted runner on naked-glados).
   deploy:
