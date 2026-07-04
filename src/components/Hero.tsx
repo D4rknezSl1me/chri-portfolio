@@ -2,11 +2,12 @@
 
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
-import { site } from '@/lib/site'
 import { HeroCanvas } from './HeroCanvas'
 import { Magnetic } from './Magnetic'
+import { useI18n } from './i18n/LanguageProvider'
 
 export function Hero() {
+  const { t } = useI18n()
   const reduce = useReducedMotion()
   const ref = useRef<HTMLElement>(null)
 
@@ -40,7 +41,7 @@ export function Hero() {
           transition={{ duration: 0.5 }}
           className="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-accent"
         >
-          {site.role}
+          {t.hero.role}
         </motion.p>
 
         <motion.h1
@@ -49,7 +50,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.05 }}
           className="max-w-4xl text-balance text-5xl font-semibold leading-[1.05] tracking-tight sm:text-7xl"
         >
-          I build software that ships, and I&apos;m building toward something of my own.
+          {t.hero.headline}
         </motion.h1>
 
         <motion.p
@@ -58,7 +59,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.12 }}
           className="mt-6 max-w-2xl text-lg text-muted"
         >
-          {site.description}
+          {t.hero.description}
         </motion.p>
 
         <motion.div
@@ -72,7 +73,7 @@ export function Hero() {
               href="#work"
               className="inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-bg"
             >
-              See my work
+              {t.hero.ctaWork}
             </a>
           </Magnetic>
           <Magnetic className="inline-block">
@@ -80,14 +81,14 @@ export function Hero() {
               href="#contact"
               className="inline-block rounded-full border border-border px-6 py-3 text-sm font-semibold text-fg transition-colors hover:bg-surface"
             >
-              Get in touch
+              {t.hero.ctaContact}
             </a>
           </Magnetic>
           <a
             href="/resume"
             className="text-sm font-medium text-muted underline-offset-4 transition-colors hover:text-fg hover:underline"
           >
-            View résumé →
+            {t.hero.ctaResume}
           </a>
         </motion.div>
       </motion.div>

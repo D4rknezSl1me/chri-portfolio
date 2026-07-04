@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import { site } from '@/lib/site'
+import { LanguageProvider } from '@/components/i18n/LanguageProvider'
 import './globals.css'
 
 const inter = Inter({
@@ -52,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} dark`} suppressHydrationWarning>
       <body>
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
         <script
           type="application/ld+json"
           // JSON-LD is static and safe; not user input.

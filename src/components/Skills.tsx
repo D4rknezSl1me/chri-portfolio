@@ -1,14 +1,19 @@
+'use client'
+
 import { Section } from './Section'
 import { Parallax } from './Parallax'
 import { SpotlightCard } from './SpotlightCard'
 import { skills } from '@/lib/skills'
+import { useI18n } from './i18n/LanguageProvider'
 
 // Stagger the drift by column position so the three-up grid ripples on scroll.
 const DRIFT = [34, 62, 46] as const
 
 export function Skills() {
+  const { t } = useI18n()
+
   return (
-    <Section id="skills" eyebrow="Skills & expertise" title="Across the whole stack">
+    <Section id="skills" eyebrow={t.skills.eyebrow} title={t.skills.title}>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {skills.map((group, i) => (
           <Parallax
@@ -19,7 +24,7 @@ export function Skills() {
           >
             <SpotlightCard className="h-full rounded-2xl border border-border bg-surface/40 p-6">
               <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-accent">
-                {group.category}
+                {t.skills.categories[group.category] ?? group.category}
               </h3>
               <ul className="flex flex-wrap gap-2">
                 {group.skills.map((s) => (

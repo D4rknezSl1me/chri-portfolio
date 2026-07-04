@@ -5,10 +5,12 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Section } from './Section'
 import { site } from '@/lib/site'
 import { Magnetic } from './Magnetic'
+import { useI18n } from './i18n/LanguageProvider'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 export function Contact() {
+  const { t } = useI18n()
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError] = useState<string | null>(null)
 
@@ -39,13 +41,10 @@ export function Contact() {
   }
 
   return (
-    <Section id="contact" eyebrow="Let's talk" title="Get in touch">
+    <Section id="contact" eyebrow={t.contact.eyebrow} title={t.contact.title}>
       <div className="grid gap-10 md:grid-cols-2">
         <div>
-          <p className="text-lg text-muted">
-            Building something, hiring, or investing in people early? I&apos;d love to hear from
-            you.
-          </p>
+          <p className="text-lg text-muted">{t.contact.blurb}</p>
           <a
             href={`mailto:${site.email}`}
             className="mt-4 inline-block font-medium text-accent hover:underline"
@@ -67,7 +66,7 @@ export function Contact() {
               <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
-            <span>Italy</span>
+            <span>{t.contact.location}</span>
           </div>
         </div>
 
@@ -85,14 +84,14 @@ export function Contact() {
             <input
               name="name"
               required
-              placeholder="Your name"
+              placeholder={t.contact.name}
               className="rounded-lg border border-border bg-surface/40 px-4 py-3 outline-none focus:border-accent"
             />
             <input
               name="email"
               type="email"
               required
-              placeholder="Your email"
+              placeholder={t.contact.email}
               className="rounded-lg border border-border bg-surface/40 px-4 py-3 outline-none focus:border-accent"
             />
           </div>
@@ -100,7 +99,7 @@ export function Contact() {
             name="message"
             required
             rows={5}
-            placeholder="Your message"
+            placeholder={t.contact.message}
             className="w-full rounded-lg border border-border bg-surface/40 px-4 py-3 outline-none focus:border-accent"
           />
           <AnimatePresence mode="wait" initial={false}>
@@ -137,9 +136,7 @@ export function Contact() {
                     transition={{ duration: 0.4, delay: 0.4, ease: 'easeOut' }}
                   />
                 </motion.svg>
-                <p className="text-sm text-fg">
-                  Thanks! Your message is on its way. I&apos;ll get back to you soon.
-                </p>
+                <p className="text-sm text-fg">{t.contact.sent}</p>
               </motion.div>
             ) : (
               <motion.div key="form" exit={{ opacity: 0 }} className="space-y-3">
@@ -149,7 +146,7 @@ export function Contact() {
                     disabled={status === 'sending'}
                     className="inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-bg disabled:opacity-60"
                   >
-                    {status === 'sending' ? 'Sending…' : 'Send message'}
+                    {status === 'sending' ? t.contact.sending : t.contact.send}
                   </button>
                 </Magnetic>
                 {status === 'error' && <p className="text-sm text-red-400">{error}</p>}

@@ -2,14 +2,15 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useInView, useReducedMotion } from 'framer-motion'
+import { useI18n } from './i18n/LanguageProvider'
 
-type Stat = { value: number; suffix?: string; text?: string; label: string }
+type Stat = { value: number; suffix?: string; text?: string }
 
 const stats: Stat[] = [
-  { value: 6, suffix: '', label: 'Products designed & shipped' },
-  { value: 3, suffix: '', label: 'KinAI products, full-stack' },
-  { value: 100, suffix: '%', label: 'Owned end-to-end, self-hosted' },
-  { text: 'A+', value: 0, label: 'Security-header rating' },
+  { value: 6, suffix: '' },
+  { value: 3, suffix: '' },
+  { value: 100, suffix: '%' },
+  { text: 'A+', value: 0 },
 ]
 
 function CountUp({ to, suffix }: { to: number; suffix?: string }) {
@@ -46,16 +47,17 @@ function CountUp({ to, suffix }: { to: number; suffix?: string }) {
 }
 
 export function Stats() {
+  const { t } = useI18n()
   return (
     <section className="border-t border-border/60">
       <div className="mx-auto max-w-content px-6 py-12">
         <dl className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          {stats.map((s) => (
-            <div key={s.label} className="text-center md:text-left">
+          {stats.map((s, i) => (
+            <div key={i} className="text-center md:text-left">
               <dt className="text-4xl font-semibold tracking-tight text-fg sm:text-5xl">
                 {s.text ? s.text : <CountUp to={s.value} suffix={s.suffix} />}
               </dt>
-              <dd className="mt-2 text-sm text-muted">{s.label}</dd>
+              <dd className="mt-2 text-sm text-muted">{t.stats.items[i]}</dd>
             </div>
           ))}
         </dl>
@@ -66,7 +68,9 @@ export function Stats() {
             <path d="m9 12 2 2 4-4" />
           </svg>
           <span>
-            In production with clubs across Italy&apos;s <span className="text-fg">Serie A &amp; Serie B</span>.
+            {t.stats.trustBefore}
+            <span className="text-fg">{t.stats.trustEmphasis}</span>
+            {t.stats.trustAfter}
           </span>
         </div>
       </div>

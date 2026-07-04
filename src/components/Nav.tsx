@@ -4,21 +4,25 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { site } from '@/lib/site'
 import { ThemeToggle } from './ThemeToggle'
+import { LanguageSwitcher } from './i18n/LanguageSwitcher'
+import { useI18n } from './i18n/LanguageProvider'
 
-const links = [
-  { href: '#work', label: 'Work' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#vision', label: 'Vision' },
-  { href: '#contact', label: 'Contact' },
-]
+const sectionIds = ['work', 'skills', 'vision', 'contact'] as const
 
 export function Nav() {
+  const { t } = useI18n()
   const [active, setActive] = useState<string>('')
+
+  const links = [
+    { href: '#work', label: t.nav.work },
+    { href: '#skills', label: t.nav.skills },
+    { href: '#vision', label: t.nav.vision },
+    { href: '#contact', label: t.nav.contact },
+  ]
 
   // Highlight the nav item for whichever section is currently in view.
   useEffect(() => {
-    const ids = links.map((l) => l.href.slice(1))
-    const sections = ids
+    const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null)
 
@@ -59,14 +63,15 @@ export function Nav() {
           ))}
           <li>
             <a href="/resume" className="transition-colors hover:text-fg">
-              Résumé
+              {t.nav.resume}
             </a>
           </li>
         </ul>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <a href="/resume" className="text-sm text-muted transition-colors hover:text-fg sm:hidden">
-            Résumé
+            {t.nav.resume}
           </a>
+          <LanguageSwitcher />
           <ThemeToggle />
         </div>
       </nav>
