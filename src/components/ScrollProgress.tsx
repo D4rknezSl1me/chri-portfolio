@@ -21,7 +21,14 @@ export function ScrollProgress() {
   const { scrollYProgress } = useScroll()
   const progress = useMotionValue(0)
   const smooth = useSpring(progress, { stiffness: 260, damping: 34, mass: 0.2 })
-  const top = useTransform(smooth, [0, 1], ['0%', `${(1 - THUMB) * 100}%`])
+  // While dragging we bypass the spring so the thumb pins to the pointer 1:1;
+  // otherwise it follows the eased spring for buttery wheel-scrolling.
+  const drag = useMotionValue(0)
+  const isDragging = useMotionValue(0)
+  const top = useTransform(
+    [smooth, drag, isDragging] as const,
+    ([s, d, on]: number[]) => `${((on ? d : s) ?? 0) * (1 - THUMB) * 100}%`,
+  )
 
   // Follow the page while not actively dragging.
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
@@ -37,12 +44,16 @@ export function ScrollProgress() {
     const offset = Math.max(0, Math.min(travel, clientY - rect.top - thumbH / 2))
     const p = travel > 0 ? offset / travel : 0
     progress.set(p)
+    drag.set(p)
     const max = document.documentElement.scrollHeight - window.innerHeight
-    window.scrollTo(0, p * max)
+    // 'instant' overrides the global `scroll-behavior: smooth`, so dragging
+    // tracks the pointer 1:1 instead of lagging behind an animation.
+    window.scrollTo({ top: p * max, behavior: 'instant' })
   }
 
   const onPointerDown = (e: React.PointerEvent) => {
     dragging.current = true
+    isDragging.set(1)
     e.currentTarget.setPointerCapture(e.pointerId)
     scrollToPointer(e.clientY)
   }
@@ -51,6 +62,7 @@ export function ScrollProgress() {
   }
   const endDrag = (e: React.PointerEvent) => {
     dragging.current = false
+    isDragging.set(0)
     e.currentTarget.releasePointerCapture?.(e.pointerId)
   }
 

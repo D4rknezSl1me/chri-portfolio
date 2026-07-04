@@ -1,15 +1,24 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { site } from '@/lib/site'
 import { HeroCanvas } from './HeroCanvas'
 
 export function Hero() {
   const reduce = useReducedMotion()
+  const ref = useRef<HTMLElement>(null)
+
+  // As the hero scrolls away, the copy drifts up and fades — so it feels like
+  // it's actively moving with the page, not just sitting until it's gone.
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
+  const y = useTransform(scrollYProgress, [0, 1], [0, -120])
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
 
   return (
-    <section className="relative min-h-[92vh] overflow-hidden">
-      {/* Only the background reacts to the cursor/scroll; the text stays put. */}
+    <section ref={ref} className="relative min-h-[92vh] overflow-hidden">
+      {/* Only the background reacts to the cursor; the copy stays put under the
+          pointer and drifts only with scroll. */}
       <HeroCanvas />
       <div
         aria-hidden
@@ -20,7 +29,10 @@ export function Hero() {
         }}
       />
 
-      <div className="mx-auto max-w-content px-6 pb-24 pt-28 sm:pt-40">
+      <motion.div
+        style={reduce ? undefined : { y, opacity }}
+        className="mx-auto max-w-content px-6 pb-24 pt-28 sm:pt-40"
+      >
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -67,7 +79,7 @@ export function Hero() {
             Get in touch
           </a>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   )
 }

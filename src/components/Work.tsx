@@ -1,14 +1,22 @@
 import { Section } from './Section'
+import { Parallax } from './Parallax'
 import { projects } from '@/lib/projects'
 
 export function Work() {
   return (
     <Section id="work" eyebrow="Selected work" title="Things I've built">
       <div className="grid gap-6 md:grid-cols-2">
-        {projects.map((p) => (
-          <article
+        {projects.map((p, i) => (
+          // Alternate columns drift at opposing rates so the grid feels alive
+          // and gains depth as it scrolls past.
+          <Parallax
             key={p.slug}
-            className="group flex flex-col rounded-2xl border border-border bg-surface/40 p-6 transition-colors hover:border-accent/50"
+            from={i % 2 === 0 ? 44 : 76}
+            to={i % 2 === 0 ? -44 : -76}
+            className="h-full"
+          >
+          <article
+            className="group flex h-full flex-col rounded-2xl border border-border bg-surface/40 p-6 transition-colors hover:border-accent/50"
           >
             <div className="mb-3 flex items-baseline justify-between gap-4">
               <h3 className="text-xl font-semibold">{p.title}</h3>
@@ -51,6 +59,7 @@ export function Work() {
               )}
             </div>
           </article>
+          </Parallax>
         ))}
       </div>
     </Section>
