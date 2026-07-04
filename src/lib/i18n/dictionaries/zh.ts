@@ -119,7 +119,7 @@ export const zh: Dictionary = {
 
   github: {
     eyebrow: '公开',
-    title: '近期在 GitHub 上发布',
+    title: 'GitHub 精选项目',
     reposSuffix: '个公开仓库',
     seeAll: '在 GitHub 上查看全部 →',
     fallback: '在 GitHub 上找到我 →',

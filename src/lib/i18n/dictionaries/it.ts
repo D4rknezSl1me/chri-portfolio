@@ -125,7 +125,7 @@ export const it: Dictionary = {
 
   github: {
     eyebrow: 'In pubblico',
-    title: 'Rilasciato di recente su GitHub',
+    title: 'In evidenza su GitHub',
     reposSuffix: 'repository pubblici',
     seeAll: 'Vedi tutto su GitHub →',
     fallback: 'Trovami su GitHub →',

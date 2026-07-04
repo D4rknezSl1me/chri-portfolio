@@ -126,7 +126,7 @@ export const en = {
 
   github: {
     eyebrow: 'In the open',
-    title: 'Recently shipped on GitHub',
+    title: 'Featured on GitHub',
     reposSuffix: 'public repositories',
     seeAll: 'See all on GitHub →',
     fallback: 'Find me on GitHub →',
