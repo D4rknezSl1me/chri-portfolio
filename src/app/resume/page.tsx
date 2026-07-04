@@ -7,7 +7,7 @@ import { PrintButton } from '@/components/PrintButton'
 
 export const metadata: Metadata = {
   title: 'Résumé',
-  description: `One-page résumé for ${site.name} — ${site.role}.`,
+  description: `One-page résumé for ${site.name}, ${site.role}.`,
 }
 
 // A print-optimized one-pager generated from the same source of truth as the
@@ -47,7 +47,7 @@ export default function ResumePage() {
 
         <Block title="Summary">
           <p className="text-sm leading-relaxed text-muted print:text-black/80">
-            Full-stack software developer building production systems end to end — from UI to data
+            Full-stack software developer building production systems end to end, from UI to data
             model to the Kubernetes cluster they run on. Currently full-stack on KinAI, an AI
             platform in production with clubs across Italy&apos;s Serie A and Serie B. Deliberately
             building toward world-class engineering and, ultimately, a company of my own.
@@ -87,15 +87,15 @@ export default function ResumePage() {
         <Block title="Trajectory">
           <ul className="space-y-1 text-sm text-muted print:text-black/80">
             <li>
-              <span className="font-medium text-fg print:text-black">Now —</span> Shipping real
+              <span className="font-medium text-fg print:text-black">Now:</span> Shipping real
               software, sharpening fundamentals.
             </li>
             <li>
-              <span className="font-medium text-fg print:text-black">3 years —</span> A world-class
+              <span className="font-medium text-fg print:text-black">3 years:</span> A world-class
               engineer with a track record.
             </li>
             <li>
-              <span className="font-medium text-fg print:text-black">The goal —</span> Founding and
+              <span className="font-medium text-fg print:text-black">The goal:</span> Founding and
               building my own company.
             </li>
           </ul>

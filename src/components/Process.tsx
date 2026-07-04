@@ -4,17 +4,17 @@ const steps = [
   {
     k: '01',
     title: 'Design',
-    body: 'Sharp product thinking before a line of code — what should exist, and why it wins.',
+    body: 'Sharp product thinking before a line of code: what should exist, and why it wins.',
   },
   {
     k: '02',
     title: 'Build',
-    body: 'Full-stack, strongly typed, and tested — from the UI down to the data model.',
+    body: 'Full-stack, strongly typed, and tested, from the UI down to the data model.',
   },
   {
     k: '03',
     title: 'Ship',
-    body: 'CI/CD on v* tags: image scan, security gates, zero-downtime rollout — automatically.',
+    body: 'CI/CD on v* tags: image scan, security gates, zero-downtime rollout, automatically.',
   },
   {
     k: '04',

@@ -49,7 +49,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.05 }}
           className="max-w-4xl text-balance text-5xl font-semibold leading-[1.05] tracking-tight sm:text-7xl"
         >
-          I build software that ships — and I&apos;m building toward something of my own.
+          I build software that ships, and I&apos;m building toward something of my own.
         </motion.h1>
 
         <motion.p

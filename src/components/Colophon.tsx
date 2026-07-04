@@ -21,7 +21,7 @@ export function Colophon() {
       <div className="mx-auto max-w-content px-6 py-12">
         <p className="text-sm text-muted">
           <span className="text-fg">How this site is built.</span> Designed, developed, hardened,
-          and self-hosted by me — no page builder, no third-party host.
+          and self-hosted by me. No page builder, no third-party host.
         </p>
         <ul className="mt-4 flex flex-wrap gap-2">
           {stack.map((s) => (

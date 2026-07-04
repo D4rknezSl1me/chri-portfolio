@@ -56,12 +56,12 @@ export function Vision() {
     <Section id="vision" eyebrow="Where I'm headed" title="The vision">
       <div className="grid gap-12">
         <p className="max-w-3xl text-lg leading-relaxed text-muted">
-          I&apos;m a software developer today with deep, hands-on skills — and I&apos;m
+          I&apos;m a software developer today with deep, hands-on skills, and I&apos;m
           deliberately building into a world-class engineer over the next few years. But the goal
           isn&apos;t just to be great at the craft. It&apos;s to build a company of my own: to turn
           a concrete thesis about{' '}
           <span className="text-fg">the software I believe should exist</span> into a product, a
-          team, and a business. This site is the first proof of how I work — owned end to end, from
+          team, and a business. This site is the first proof of how I work: owned end to end, from
           the code to the cluster it runs on.
         </p>
         <Timeline />

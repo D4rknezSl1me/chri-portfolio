@@ -138,7 +138,7 @@ export function Contact() {
                   />
                 </motion.svg>
                 <p className="text-sm text-fg">
-                  Thanks — your message is on its way. I&apos;ll get back to you soon.
+                  Thanks! Your message is on its way. I&apos;ll get back to you soon.
                 </p>
               </motion.div>
             ) : (

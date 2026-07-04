@@ -5,8 +5,9 @@ import { useEffect, useRef } from 'react'
 type Pt = { x: number; y: number; z: number }
 type Proj = { sx: number; sy: number; depth: number }
 
-// A lightweight interactive 3D point-cloud rendered on a 2D canvas:
-// real rotation + perspective projection, driven by the cursor and scroll.
+// A lightweight interactive 3D point-cloud rendered on a 2D canvas: real
+// rotation + perspective projection, driven by the cursor and scroll. It only
+// runs while the hero is on screen, and its colour tracks the active theme.
 export function HeroCanvas() {
   const ref = useRef<HTMLCanvasElement>(null)
 
@@ -18,7 +19,9 @@ export function HeroCanvas() {
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
-    const N = 90
+    const N = 72
+    const LINK = 118
+    const LINK2 = LINK * LINK
     const points: Pt[] = Array.from({ length: N }, () => ({
       x: Math.random() * 2 - 1,
       y: Math.random() * 2 - 1,
@@ -30,6 +33,20 @@ export function HeroCanvas() {
     const target = { x: 0, y: 0 }
     const cur = { x: 0, y: 0 }
     let scrollFade = 1
+
+    // Theme-aware colour: read the accent channels from CSS and brighten in
+    // light mode so the mesh reads cleanly on a pale background.
+    let rgb = '56,224,210'
+    let boost = 1
+    const readTheme = () => {
+      const styles = getComputedStyle(document.documentElement)
+      const accent = styles.getPropertyValue('--accent').trim()
+      if (accent) rgb = accent.split(/\s+/).join(',')
+      boost = document.documentElement.classList.contains('light') ? 1.7 : 1
+    }
+    readTheme()
+    const themeObserver = new MutationObserver(readTheme)
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect()
@@ -55,20 +72,22 @@ export function HeroCanvas() {
       return { sx: width / 2 + x1 * s * depth, sy: height / 2 + y1 * s * depth, depth }
     }
 
+    const proj: Proj[] = new Array(N)
     const render = (angX: number, angY: number) => {
       ctx.clearRect(0, 0, width, height)
-      const proj = points.map((p) => project(p, angX, angY))
+      for (let i = 0; i < N; i++) proj[i] = project(points[i] as Pt, angX, angY)
 
       for (let i = 0; i < N; i++) {
-        const a = proj[i]
-        if (!a) continue
+        const a = proj[i] as Proj
         for (let j = i + 1; j < N; j++) {
-          const b = proj[j]
-          if (!b) continue
-          const d = Math.hypot(a.sx - b.sx, a.sy - b.sy)
-          if (d < 110) {
-            const alpha = (1 - d / 110) * 0.28 * scrollFade * Math.min(a.depth, b.depth)
-            ctx.strokeStyle = `rgba(56,224,210,${alpha})`
+          const b = proj[j] as Proj
+          const dx = a.sx - b.sx
+          const dy = a.sy - b.sy
+          const d2 = dx * dx + dy * dy
+          if (d2 < LINK2) {
+            const d = Math.sqrt(d2)
+            const alpha = (1 - d / LINK) * 0.28 * scrollFade * Math.min(a.depth, b.depth) * boost
+            ctx.strokeStyle = `rgba(${rgb},${alpha})`
             ctx.lineWidth = 1
             ctx.beginPath()
             ctx.moveTo(a.sx, a.sy)
@@ -79,9 +98,8 @@ export function HeroCanvas() {
       }
 
       for (let i = 0; i < N; i++) {
-        const a = proj[i]
-        if (!a) continue
-        ctx.fillStyle = `rgba(56,224,210,${0.55 * scrollFade * a.depth})`
+        const a = proj[i] as Proj
+        ctx.fillStyle = `rgba(${rgb},${0.55 * scrollFade * a.depth * boost})`
         ctx.beginPath()
         ctx.arc(a.sx, a.sy, 1.7 * a.depth, 0, Math.PI * 2)
         ctx.fill()
@@ -99,36 +117,69 @@ export function HeroCanvas() {
     resize()
     window.addEventListener('resize', resize)
 
+    // Only animate while the hero is actually visible — no wasted frames once
+    // the user has scrolled past it.
     let raf = 0
+    let running = false
+    let onScreen = true
+    let t = 0
+
+    const loop = () => {
+      // Fully faded out (scrolled away): idle without burning frames.
+      if (scrollFade <= 0.01) {
+        ctx.clearRect(0, 0, width, height)
+        running = false
+        return
+      }
+      t += 0.0016
+      cur.x += (target.x - cur.x) * 0.05
+      cur.y += (target.y - cur.y) * 0.05
+      render(cur.y * 0.5, t + cur.x * 0.9)
+      raf = requestAnimationFrame(loop)
+    }
+    const start = () => {
+      if (running || reduce || !onScreen) return
+      running = true
+      raf = requestAnimationFrame(loop)
+    }
+
     if (reduce) {
       render(0.2, 0.5)
     } else {
-      window.addEventListener('mousemove', onMove)
-      window.addEventListener('scroll', onScroll, { passive: true })
-      let t = 0
-      const loop = () => {
-        t += 0.0016
-        cur.x += (target.x - cur.x) * 0.05
-        cur.y += (target.y - cur.y) * 0.05
-        render(cur.y * 0.5, t + cur.x * 0.9)
-        raf = requestAnimationFrame(loop)
+      const onScrollWake = () => {
+        onScroll()
+        start() // wake the loop back up when scrolling near the top
       }
-      raf = requestAnimationFrame(loop)
+      window.addEventListener('mousemove', onMove, { passive: true })
+      window.addEventListener('scroll', onScrollWake, { passive: true })
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          onScreen = entry?.isIntersecting ?? false
+          if (onScreen) start()
+        },
+        { threshold: 0 },
+      )
+      io.observe(canvas)
+      start()
+
+      return () => {
+        cancelAnimationFrame(raf)
+        window.removeEventListener('resize', resize)
+        window.removeEventListener('mousemove', onMove)
+        window.removeEventListener('scroll', onScrollWake)
+        io.disconnect()
+        themeObserver.disconnect()
+      }
     }
 
     return () => {
       cancelAnimationFrame(raf)
       window.removeEventListener('resize', resize)
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('scroll', onScroll)
+      themeObserver.disconnect()
     }
   }, [])
 
   return (
-    <canvas
-      ref={ref}
-      aria-hidden
-      className="pointer-events-none absolute inset-0 h-full w-full"
-    />
+    <canvas ref={ref} aria-hidden className="pointer-events-none absolute inset-0 h-full w-full" />
   )
 }
