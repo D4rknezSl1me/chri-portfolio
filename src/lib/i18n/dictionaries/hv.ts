@@ -4,7 +4,7 @@ import { en, type Dictionary } from './en'
 // small (if real) vocabulary, so there are no words for "Kubernetes" or
 // "microservice". We render the iconic chrome in attested High Valyrian and let
 // the long technical prose fall back to English. Fan-level; a fluent speaker
-// could refine it. Valar morghulis. 🐉
+// could refine it. Valar morghulis.
 export const hv: Dictionary = {
   ...en,
 

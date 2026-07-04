@@ -27,7 +27,14 @@ export function GitHubActivityView({ data }: { data: Data }) {
                   <span className="font-mono text-sm font-semibold text-fg group-hover:text-accent">
                     {r.name}
                   </span>
-                  {r.stars > 0 && <span className="text-xs text-muted">★ {r.stars}</span>}
+                  {r.stars > 0 && (
+                    <span className="inline-flex items-center gap-1 text-xs text-muted">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                        <path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.9 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z" />
+                      </svg>
+                      {r.stars}
+                    </span>
+                  )}
                 </div>
                 {r.description && (
                   <p className="mt-2 line-clamp-2 text-sm text-muted">{r.description}</p>

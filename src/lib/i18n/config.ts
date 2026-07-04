@@ -14,11 +14,11 @@ export const htmlLang: Record<Locale, string> = {
   hv: 'art-x-valyrian',
 }
 
-export const localeMeta: Record<Locale, { label: string; english: string; flag: string }> = {
-  en: { label: 'English', english: 'English', flag: '🇬🇧' },
-  it: { label: 'Italiano', english: 'Italian', flag: '🇮🇹' },
-  de: { label: 'Deutsch', english: 'German', flag: '🇩🇪' },
-  fr: { label: 'Français', english: 'French', flag: '🇫🇷' },
-  zh: { label: '中文', english: 'Chinese', flag: '🇨🇳' },
-  hv: { label: 'Valyrio Ēngos', english: 'High Valyrian', flag: '🐉' },
+export const localeMeta: Record<Locale, { label: string; english: string; code: string }> = {
+  en: { label: 'English', english: 'English', code: 'EN' },
+  it: { label: 'Italiano', english: 'Italian', code: 'IT' },
+  de: { label: 'Deutsch', english: 'German', code: 'DE' },
+  fr: { label: 'Français', english: 'French', code: 'FR' },
+  zh: { label: '中文', english: 'Chinese', code: 'ZH' },
+  hv: { label: 'Valyrio Ēngos', english: 'High Valyrian', code: 'HV' },
 }

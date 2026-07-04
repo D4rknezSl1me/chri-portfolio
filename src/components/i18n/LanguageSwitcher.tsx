@@ -36,7 +36,9 @@ export function LanguageSwitcher() {
         aria-expanded={open}
         className="flex h-9 items-center gap-1.5 rounded-full border border-border px-3 text-sm text-muted transition-colors hover:border-accent/50 hover:text-fg"
       >
-        <span className="text-base leading-none">{current.flag}</span>
+        <span className="font-mono text-xs font-semibold tracking-wide text-accent">
+          {current.code}
+        </span>
         <span className="hidden sm:inline">{current.label}</span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden className={open ? 'rotate-180 transition-transform' : 'transition-transform'}>
           <path d="m6 9 6 6 6-6" />
@@ -65,7 +67,13 @@ export function LanguageSwitcher() {
                     active ? 'text-accent' : 'text-fg'
                   }`}
                 >
-                  <span className="text-base leading-none">{meta.flag}</span>
+                  <span
+                    className={`w-6 font-mono text-xs font-semibold tracking-wide ${
+                      active ? 'text-accent' : 'text-muted'
+                    }`}
+                  >
+                    {meta.code}
+                  </span>
                   <span className="flex-1">{meta.label}</span>
                   <span className="text-xs text-muted">{meta.english}</span>
                 </button>
