@@ -1,5 +1,6 @@
 import { Section } from './Section'
 import { Parallax } from './Parallax'
+import { SpotlightCard } from './SpotlightCard'
 import { projects } from '@/lib/projects'
 
 export function Work() {
@@ -15,50 +16,59 @@ export function Work() {
             to={i % 2 === 0 ? -44 : -76}
             className="h-full"
           >
-          <article
-            className="group flex h-full flex-col rounded-2xl border border-border bg-surface/40 p-6 transition-colors hover:border-accent/50"
-          >
-            <div className="mb-3 flex items-baseline justify-between gap-4">
-              <h3 className="text-xl font-semibold">{p.title}</h3>
-              <span className="text-sm text-muted">{p.year}</span>
-            </div>
-            <p className="text-muted">{p.summary}</p>
-
-            <dl className="mt-4 space-y-1 text-sm">
-              <div className="flex gap-2">
-                <dt className="text-muted">Role:</dt>
-                <dd>{p.role}</dd>
+            <SpotlightCard className="group flex h-full flex-col rounded-2xl border border-border bg-surface/40 p-6 transition-colors hover:border-accent/50">
+              <div className="mb-3 flex items-baseline justify-between gap-4">
+                <h3 className="text-xl font-semibold">{p.title}</h3>
+                <span className="text-sm text-muted">{p.year}</span>
               </div>
-              <div className="flex gap-2">
-                <dt className="text-muted">Outcome:</dt>
-                <dd>{p.outcome}</dd>
+
+              {p.live && (
+                <span className="mb-3 inline-flex w-fit items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+                  </span>
+                  In production
+                </span>
+              )}
+
+              <p className="text-muted">{p.summary}</p>
+
+              <dl className="mt-4 space-y-1 text-sm">
+                <div className="flex gap-2">
+                  <dt className="text-muted">Role:</dt>
+                  <dd>{p.role}</dd>
+                </div>
+                <div className="flex gap-2">
+                  <dt className="text-muted">Outcome:</dt>
+                  <dd>{p.outcome}</dd>
+                </div>
+              </dl>
+
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {p.stack.map((s) => (
+                  <li
+                    key={s}
+                    className="rounded-full border border-border px-3 py-1 text-xs text-muted"
+                  >
+                    {s}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-5 flex gap-4 text-sm">
+                {p.href && (
+                  <a href={p.href} className="font-medium text-accent hover:underline">
+                    Live →
+                  </a>
+                )}
+                {p.repo && (
+                  <a href={p.repo} className="font-medium text-accent hover:underline">
+                    Code →
+                  </a>
+                )}
               </div>
-            </dl>
-
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {p.stack.map((s) => (
-                <li
-                  key={s}
-                  className="rounded-full border border-border px-3 py-1 text-xs text-muted"
-                >
-                  {s}
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-5 flex gap-4 text-sm">
-              {p.href && (
-                <a href={p.href} className="font-medium text-accent hover:underline">
-                  Live →
-                </a>
-              )}
-              {p.repo && (
-                <a href={p.repo} className="font-medium text-accent hover:underline">
-                  Code →
-                </a>
-              )}
-            </div>
-          </article>
+            </SpotlightCard>
           </Parallax>
         ))}
       </div>

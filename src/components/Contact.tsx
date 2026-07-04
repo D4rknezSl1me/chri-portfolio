@@ -1,8 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Section } from './Section'
 import { site } from '@/lib/site'
+import { Magnetic } from './Magnetic'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
@@ -101,17 +103,59 @@ export function Contact() {
             placeholder="Your message"
             className="w-full rounded-lg border border-border bg-surface/40 px-4 py-3 outline-none focus:border-accent"
           />
-          <button
-            type="submit"
-            disabled={status === 'sending' || status === 'sent'}
-            className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-[1.03] disabled:opacity-60"
-          >
-            {status === 'sending' ? 'Sending…' : status === 'sent' ? 'Sent ✓' : 'Send message'}
-          </button>
-          {status === 'error' && <p className="text-sm text-red-400">{error}</p>}
-          {status === 'sent' && (
-            <p className="text-sm text-accent">Thanks — I&apos;ll get back to you soon.</p>
-          )}
+          <AnimatePresence mode="wait" initial={false}>
+            {status === 'sent' ? (
+              <motion.div
+                key="sent"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-3 rounded-xl border border-accent/30 bg-accent/10 p-4"
+              >
+                <motion.svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="rgb(var(--accent))"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <motion.circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  />
+                  <motion.path
+                    d="m8 12 3 3 5-6"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.4, delay: 0.4, ease: 'easeOut' }}
+                  />
+                </motion.svg>
+                <p className="text-sm text-fg">
+                  Thanks — your message is on its way. I&apos;ll get back to you soon.
+                </p>
+              </motion.div>
+            ) : (
+              <motion.div key="form" exit={{ opacity: 0 }} className="space-y-3">
+                <Magnetic className="inline-block">
+                  <button
+                    type="submit"
+                    disabled={status === 'sending'}
+                    className="inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-bg disabled:opacity-60"
+                  >
+                    {status === 'sending' ? 'Sending…' : 'Send message'}
+                  </button>
+                </Magnetic>
+                {status === 'error' && <p className="text-sm text-red-400">{error}</p>}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </form>
       </div>
     </Section>

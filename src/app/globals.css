@@ -65,3 +65,57 @@ body {
 ::selection {
   background-color: rgb(var(--accent) / 0.25);
 }
+
+/* ---- Aurora backdrop (see <Backdrop />) --------------------------------- */
+.aurora {
+  filter: blur(90px);
+  opacity: 0.5;
+  will-change: transform;
+}
+.aurora-a {
+  background: radial-gradient(circle at center, rgb(var(--accent) / 0.5), transparent 70%);
+  animation: aurora-a 22s ease-in-out infinite;
+}
+.aurora-b {
+  background: radial-gradient(circle at center, rgb(120 90 255 / 0.35), transparent 70%);
+  animation: aurora-b 28s ease-in-out infinite;
+}
+.aurora-c {
+  background: radial-gradient(circle at center, rgb(var(--accent) / 0.28), transparent 70%);
+  animation: aurora-c 25s ease-in-out infinite;
+}
+.light .aurora {
+  opacity: 0.28;
+}
+
+@keyframes aurora-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(8%, 6%) scale(1.15); }
+}
+@keyframes aurora-b {
+  0%, 100% { transform: translate(0, 0) scale(1.1); }
+  50% { transform: translate(-7%, 4%) scale(0.95); }
+}
+@keyframes aurora-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(5%, -6%) scale(1.1); }
+}
+
+/* subtle grain to stop the gradients from banding */
+.noise {
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora {
+    animation: none !important;
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+  }
+}

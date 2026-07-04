@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { site } from '@/lib/site'
 import { HeroCanvas } from './HeroCanvas'
+import { Magnetic } from './Magnetic'
 
 export function Hero() {
   const reduce = useReducedMotion()
@@ -64,19 +65,29 @@ export function Hero() {
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.18 }}
-          className="mt-10 flex flex-wrap gap-4"
+          className="mt-10 flex flex-wrap items-center gap-4"
         >
+          <Magnetic className="inline-block">
+            <a
+              href="#work"
+              className="inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-bg"
+            >
+              See my work
+            </a>
+          </Magnetic>
+          <Magnetic className="inline-block">
+            <a
+              href="#contact"
+              className="inline-block rounded-full border border-border px-6 py-3 text-sm font-semibold text-fg transition-colors hover:bg-surface"
+            >
+              Get in touch
+            </a>
+          </Magnetic>
           <a
-            href="#work"
-            className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-bg transition-transform hover:scale-[1.03]"
+            href="/resume"
+            className="text-sm font-medium text-muted underline-offset-4 transition-colors hover:text-fg hover:underline"
           >
-            See my work
-          </a>
-          <a
-            href="#contact"
-            className="rounded-full border border-border px-6 py-3 text-sm font-semibold text-fg transition-colors hover:bg-surface"
-          >
-            Get in touch
+            View résumé →
           </a>
         </motion.div>
       </motion.div>

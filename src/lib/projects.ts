@@ -8,6 +8,8 @@ export type Project = {
   href?: string
   repo?: string
   year: string
+  /** Shows a pulsing "In production" badge on the card. */
+  live?: boolean
 }
 
 export const projects: Project[] = [
@@ -21,6 +23,7 @@ export const projects: Project[] = [
     outcome: 'Adopted by Serie A & Serie B clubs — first and only in its category.',
     href: 'https://wedica.it/it/',
     year: 'Present',
+    live: true,
   },
   {
     slug: 'aperture-nas',
@@ -41,6 +44,7 @@ export const projects: Project[] = [
     stack: ['k3s', 'FluxCD', 'Next.js', 'Fastify', 'Prisma', 'PostgreSQL', 'Cloudflare', 'Docker'],
     outcome: 'Self-healing, reproducible infrastructure running a full suite of services in production.',
     year: '2026',
+    live: true,
   },
   {
     slug: 'cs2-manager',
@@ -71,6 +75,8 @@ export const projects: Project[] = [
     stack: ['Next.js', 'TypeScript', 'Tailwind', 'k3s', 'Cloudflare', 'GitHub Actions'],
     outcome: 'A+ security headers, Lighthouse 95+, zero-cost self-hosting.',
     repo: 'https://github.com/D4rknezSl1me/chri-portfolio',
+    href: 'https://christiancangelli.com',
     year: '2026',
+    live: true,
   },
 ]
