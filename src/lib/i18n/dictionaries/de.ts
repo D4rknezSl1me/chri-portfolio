@@ -1,6 +1,7 @@
 import type { Dictionary } from './en'
 
 export const de: Dictionary = {
+  brand: 'Christian Cangelli',
   nav: { work: 'Projekte', skills: 'Fähigkeiten', vision: 'Vision', contact: 'Kontakt', resume: 'Lebenslauf' },
 
   hero: {

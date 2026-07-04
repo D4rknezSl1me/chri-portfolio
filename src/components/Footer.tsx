@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="border-t border-border/60">
       <div className="mx-auto flex max-w-content flex-col items-center justify-between gap-4 px-6 py-10 text-sm text-muted sm:flex-row">
         <p>
-          © {new Date().getFullYear()} {site.name}. {t.footer.tagline}
+          © {new Date().getFullYear()} {t.brand}. {t.footer.tagline}
         </p>
         <div className="flex gap-6">
           <a href={site.socials.github} target="_blank" rel="noopener noreferrer" className="hover:text-fg">

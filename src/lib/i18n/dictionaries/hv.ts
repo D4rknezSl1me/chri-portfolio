@@ -7,6 +7,8 @@ import type { Dictionary } from './en'
 // fluent speaker could refine the grammar; the intent is that the whole page
 // speaks Valyrian, not just the buttons. Valar morghulis.
 export const hv: Dictionary = {
+  brand: 'Valar morghulis',
+
   nav: { work: 'Gaomia', skills: 'Kostōbi', vision: 'Ōños', contact: 'Udir', resume: 'Bardugon' },
 
   hero: {

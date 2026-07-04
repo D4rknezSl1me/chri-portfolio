@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { site } from '@/lib/site'
 import { ThemeToggle } from './ThemeToggle'
 import { LanguageSwitcher } from './i18n/LanguageSwitcher'
 import { useI18n } from './i18n/LanguageProvider'
@@ -43,7 +42,7 @@ export function Nav() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-bg/70 backdrop-blur">
       <nav className="mx-auto flex max-w-content items-center justify-between px-6 py-4">
         <Link href="/" className="font-semibold tracking-tight">
-          {site.name}
+          {t.brand}
         </Link>
         <ul className="hidden items-center gap-6 text-sm text-muted sm:flex">
           {links.map((l) => (

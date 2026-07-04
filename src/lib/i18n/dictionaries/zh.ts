@@ -1,6 +1,7 @@
 import type { Dictionary } from './en'
 
 export const zh: Dictionary = {
+  brand: 'Christian Cangelli',
   nav: { work: '作品', skills: '技能', vision: '愿景', contact: '联系', resume: '简历' },
 
   hero: {

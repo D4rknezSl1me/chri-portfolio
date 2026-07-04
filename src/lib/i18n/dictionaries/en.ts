@@ -1,6 +1,10 @@
 // English — the canonical dictionary. Every other locale is typed against the
 // shape of this object, so a missing key is a compile error.
 export const en = {
+  // The displayed name/wordmark. Overridden per locale (High Valyrian swaps in
+  // "Valar morghulis").
+  brand: 'Christian Cangelli',
+
   nav: { work: 'Work', skills: 'Skills', vision: 'Vision', contact: 'Contact', resume: 'Résumé' },
 
   hero: {

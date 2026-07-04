@@ -24,7 +24,7 @@ export function ResumeView() {
 
       <article className="rounded-2xl border border-border bg-surface/40 p-8 print:rounded-none print:border-0 print:bg-transparent print:p-0">
         <header className="border-b border-border pb-5 print:border-black/20">
-          <h1 className="text-3xl font-semibold tracking-tight">{site.name}</h1>
+          <h1 className="text-3xl font-semibold tracking-tight">{t.brand}</h1>
           <p className="mt-1 text-accent print:text-black">{t.hero.role}</p>
           <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted print:text-black/70">
             <a href={`mailto:${site.email}`} className="hover:text-fg">
