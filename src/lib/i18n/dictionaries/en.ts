@@ -156,7 +156,7 @@ export const en = {
     readSource: 'Read the source →',
   },
 
-  footer: { tagline: 'Self-hosted on k3s, shipped via CI/CD.', github: 'GitHub', linkedin: 'LinkedIn', email: 'Email' },
+  footer: { tagline: 'Self-hosted on k3s, shipped via CI/CD.', github: 'GitHub', linkedin: 'LinkedIn', email: 'Email', copied: 'Copied!' },
 
   resume: {
     back: '← Back to site',
@@ -177,6 +177,8 @@ export const en = {
   },
 
   language: { change: 'Change language' },
+
+  star: { give: 'Star this site', starred: 'Thanks for the star!' },
 }
 
 export type Dictionary = typeof en

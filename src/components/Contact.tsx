@@ -10,7 +10,7 @@ import { useI18n } from './i18n/LanguageProvider'
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 export function Contact() {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError] = useState<string | null>(null)
 
@@ -20,7 +20,8 @@ export function Contact() {
     setError(null)
 
     const form = e.currentTarget
-    const data = Object.fromEntries(new FormData(form).entries())
+    // Include the visitor's locale so the confirmation email is in their language.
+    const data = { ...Object.fromEntries(new FormData(form).entries()), locale }
 
     try {
       const res = await fetch('/api/contact', {

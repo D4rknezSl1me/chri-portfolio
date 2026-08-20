@@ -150,7 +150,7 @@ export const de: Dictionary = {
     readSource: 'Quellcode lesen →',
   },
 
-  footer: { tagline: 'Self-hosted auf k3s, ausgeliefert via CI/CD.', github: 'GitHub', linkedin: 'LinkedIn', email: 'E-Mail' },
+  footer: { tagline: 'Self-hosted auf k3s, ausgeliefert via CI/CD.', github: 'GitHub', linkedin: 'LinkedIn', email: 'E-Mail', copied: 'Kopiert!' },
 
   resume: {
     back: '← Zurück zur Seite',
@@ -171,4 +171,6 @@ export const de: Dictionary = {
   },
 
   language: { change: 'Sprache ändern' },
+
+  star: { give: 'Seite mit Stern markieren', starred: 'Danke für den Stern!' },
 }

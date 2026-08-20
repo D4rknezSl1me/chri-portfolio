@@ -157,7 +157,7 @@ export const hv: Dictionary = {
     readSource: 'Kōdes ūndegon →',
   },
 
-  footer: { tagline: 'Āī-hosted k3s-ot, CI/CD-hen jikaks.', github: 'GitHub', linkedin: 'LinkedIn', email: 'Ēdrutas' },
+  footer: { tagline: 'Āī-hosted k3s-ot, CI/CD-hen jikaks.', github: 'GitHub', linkedin: 'LinkedIn', email: 'Ēdrutas', copied: 'Ēvȳ!' },
 
   resume: {
     back: '← Lentot māzigon',
@@ -178,4 +178,6 @@ export const hv: Dictionary = {
   },
 
   language: { change: 'Ēngos wȳrgmagon' },
+
+  star: { give: 'Sōvēs emagon', starred: 'Kirimvose sōvot!' },
 }

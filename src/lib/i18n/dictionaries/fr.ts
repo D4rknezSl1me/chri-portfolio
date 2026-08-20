@@ -151,7 +151,7 @@ export const fr: Dictionary = {
     readSource: 'Lire le code source →',
   },
 
-  footer: { tagline: 'Auto-hébergé sur k3s, livré via CI/CD.', github: 'GitHub', linkedin: 'LinkedIn', email: 'Email' },
+  footer: { tagline: 'Auto-hébergé sur k3s, livré via CI/CD.', github: 'GitHub', linkedin: 'LinkedIn', email: 'Email', copied: 'Copié !' },
 
   resume: {
     back: '← Retour au site',
@@ -172,4 +172,6 @@ export const fr: Dictionary = {
   },
 
   language: { change: 'Changer de langue' },
+
+  star: { give: 'Laisser une étoile', starred: 'Merci pour l’étoile !' },
 }

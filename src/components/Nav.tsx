@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ThemeToggle } from './ThemeToggle'
+import { StarButton } from './StarButton'
 import { LanguageSwitcher } from './i18n/LanguageSwitcher'
 import { useI18n } from './i18n/LanguageProvider'
 
@@ -70,6 +71,7 @@ export function Nav() {
           <a href="/resume" className="text-sm text-muted transition-colors hover:text-fg sm:hidden">
             {t.nav.resume}
           </a>
+          <StarButton />
           <LanguageSwitcher />
           <ThemeToggle />
         </div>

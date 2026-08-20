@@ -145,7 +145,7 @@ export const zh: Dictionary = {
     readSource: '阅读源代码 →',
   },
 
-  footer: { tagline: '自托管于 k3s，通过 CI/CD 交付。', github: 'GitHub', linkedin: 'LinkedIn', email: '邮箱' },
+  footer: { tagline: '自托管于 k3s，通过 CI/CD 交付。', github: 'GitHub', linkedin: 'LinkedIn', email: '邮箱', copied: '已复制！' },
 
   resume: {
     back: '← 返回网站',
@@ -166,4 +166,6 @@ export const zh: Dictionary = {
   },
 
   language: { change: '切换语言' },
+
+  star: { give: '给网站点星', starred: '感谢你的星标！' },
 }

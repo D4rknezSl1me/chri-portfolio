@@ -152,7 +152,7 @@ export const it: Dictionary = {
     readSource: 'Leggi il codice sorgente →',
   },
 
-  footer: { tagline: 'Self-hosted su k3s, distribuito via CI/CD.', github: 'GitHub', linkedin: 'LinkedIn', email: 'Email' },
+  footer: { tagline: 'Self-hosted su k3s, distribuito via CI/CD.', github: 'GitHub', linkedin: 'LinkedIn', email: 'Email', copied: 'Copiato!' },
 
   resume: {
     back: '← Torna al sito',
@@ -173,4 +173,6 @@ export const it: Dictionary = {
   },
 
   language: { change: 'Cambia lingua' },
+
+  star: { give: 'Lascia una stella', starred: 'Grazie per la stella!' },
 }
