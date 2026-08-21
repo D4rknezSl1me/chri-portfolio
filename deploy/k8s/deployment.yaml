@@ -65,6 +65,10 @@ spec:
               mountPath: /tmp
             - name: next-cache
               mountPath: /app/.next/cache
+          env:
+            # In-cluster Valkey backing the star counter (see valkey.yaml).
+            - name: REDIS_URL
+              value: redis://valkey:6379
           envFrom:
             - secretRef:
                 name: chri-portfolio-secrets

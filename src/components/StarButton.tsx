@@ -3,43 +3,61 @@
 import { useEffect, useState } from 'react'
 import { useI18n } from './i18n/LanguageProvider'
 
-// A "star this site" button for the header. Deliberately localStorage-backed:
-// a visitor can star exactly once per browser, and that choice is remembered,
-// so refreshing the page 100 times still only ever adds a single star — no
-// backend, no cost. There's no shared store, so the total is seeded from a
-// baseline rather than aggregated across visitors. To make the count truly
-// global later, replace BASE_STARS + local flag with a fetch to a counter API.
+// A "star this site" button for the header. The total is a real, shared count
+// backed by Upstash (see /api/stars): GET reads it on mount, POST records a
+// star. localStorage still gates repeat stars per browser — a visitor stars
+// once, and refreshing the page never adds more — so the endpoint is only hit
+// once per person. If Upstash is unconfigured the API falls back to a baseline,
+// so the button always renders a sensible number.
 const STORAGE_KEY = 'starred'
-const BASE_STARS = 128
+const FALLBACK_STARS = 128
 
 export function StarButton() {
   const { t } = useI18n()
   const [starred, setStarred] = useState(false)
   const [burst, setBurst] = useState(false)
+  const [count, setCount] = useState(FALLBACK_STARS)
 
-  // Restore the saved choice on mount. The server (and first client render)
-  // assume un-starred — the common case — so there's nothing to flash.
+  // Restore the saved choice and fetch the live total on mount. The server (and
+  // first client render) assume un-starred with the fallback count — the common
+  // case — so there's nothing to flash before the real number arrives.
   useEffect(() => {
     try {
       setStarred(localStorage.getItem(STORAGE_KEY) === '1')
     } catch {
       /* private mode — the star just won't persist */
     }
+    fetch('/api/stars')
+      .then((res) => res.json())
+      .then((data: { count?: number }) => {
+        if (typeof data.count === 'number') setCount(data.count)
+      })
+      .catch(() => {
+        /* offline / API down — keep the fallback count */
+      })
   }, [])
 
   const give = () => {
     if (starred) return // one-way: once given, it stays. This is the refresh-spam guard.
     setStarred(true)
     setBurst(true)
+    setCount((c) => c + 1) // optimistic; reconciled with the server total below.
     window.setTimeout(() => setBurst(false), 550)
     try {
       localStorage.setItem(STORAGE_KEY, '1')
     } catch {
       /* private mode */
     }
+    fetch('/api/stars', { method: 'POST' })
+      .then((res) => res.json())
+      .then((data: { count?: number }) => {
+        if (typeof data.count === 'number') setCount(data.count)
+      })
+      .catch(() => {
+        /* the optimistic +1 stands; the count self-corrects on next load */
+      })
   }
 
-  const count = BASE_STARS + (starred ? 1 : 0)
   const label = starred ? t.star.starred : t.star.give
 
   return (

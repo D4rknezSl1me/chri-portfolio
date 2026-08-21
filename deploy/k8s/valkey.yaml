@@ -1,0 +1,99 @@
+# Tiny Valkey (Redis-compatible) instance that backs the site's star counter.
+# Single replica on a local-path PVC — the counter is one integer, so this is
+# deliberately minimal. Durability via AOF + periodic snapshots so a restart
+# never loses stars.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: valkey-data
+  namespace: apps
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 256Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: valkey
+  namespace: apps
+  labels:
+    app: valkey
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate # one RWO volume — never run two pods against it at once
+  selector:
+    matchLabels:
+      app: valkey
+  template:
+    metadata:
+      labels:
+        app: valkey
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999 # 'valkey' uid in the official image
+        runAsGroup: 999
+        fsGroup: 999 # makes the mounted PVC group-writable for the valkey user
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: valkey
+          image: valkey/valkey:8-alpine
+          args:
+            - "--appendonly"
+            - "yes" # AOF: durable across restarts
+            - "--save"
+            - "60 1" # + snapshot every 60s if at least 1 key changed
+            - "--maxmemory"
+            - "48mb"
+            - "--maxmemory-policy"
+            - "noeviction" # never evict the counter under pressure
+          ports:
+            - containerPort: 6379
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true # only writes to /data (the PVC)
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "32Mi"
+            limits:
+              cpu: "200m"
+              memory: "96Mi"
+          readinessProbe:
+            exec:
+              command: ["valkey-cli", "ping"]
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 6379
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: valkey-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: valkey
+  namespace: apps
+  labels:
+    app: valkey
+spec:
+  selector:
+    app: valkey
+  ports:
+    - port: 6379
+      targetPort: 6379

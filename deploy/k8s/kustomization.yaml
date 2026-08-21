@@ -5,6 +5,7 @@ resources:
   - deployment.yaml
   - service.yaml
   - ingress.yaml
+  - valkey.yaml
 images:
   - name: d4knezsl1me/chri-portfolio
     newTag: latest # CI runs: kustomize edit set image d4knezsl1me/chri-portfolio=...:vX.Y.Z
